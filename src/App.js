@@ -1,5 +1,6 @@
 import React from 'react';
 import Accordion from './components/Accordion';
+import Search from './components/Search';
 
 //array of Q&A for accordion
 const items = [
@@ -20,7 +21,7 @@ const items = [
 export default () => {
 	return (
 		<div className="ui segment">
-			<Accordion items={items} />
+			<Search/>
 		</div>
 	);
 };
