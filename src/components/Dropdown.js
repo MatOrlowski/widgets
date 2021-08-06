@@ -1,22 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
+	//useState, useRef, useEffect Hooks
 	const [open, setOpen] = useState(false);
 	const ref = useRef();
 
 	useEffect(() => {
-		document.body.addEventListener(
-			'click',
-			(event) => {
-				if (ref.current.contains(event.target)) {
-					return;
-				}
-				setOpen(false);
-			},
-			{ capture: true }
-		);
+		const onBodyClick = (event) => {
+			if (ref.current.contains(event.target)) {
+				return;
+			}
+			setOpen(false);
+		};
+		document.body.addEventListener('click', onBodyClick, { capture: true });
+
+		return () => {
+			document.body.removeEventListener('click', onBodyClick, {
+				capture: true,
+			});
+		};
 	}, []);
 
+	//Mapping options array
 	const renderedOptions = options.map((option) => {
 		if (option.value === selected.value) {
 			return null;
@@ -33,6 +38,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
 		);
 	});
 
+	//Rendering dropdown element
 	return (
 		<div ref={ref} className="ui form">
 			<div className="field">
